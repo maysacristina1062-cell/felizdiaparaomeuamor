@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Meu Campeão ❤️</title>
+<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<section id="intro" class="active">
+  <div class="envelope-area">
+    <div class="envelope" onclick="openEnvelope(this)">
+
+      <div class="tampa"></div>
+
+      <div class="aba-direita"></div>
+
+
+      <img class="img" src="heart.png">
+
+      <div class="lettre">
+        Feliz Dia dos Namorados para o homem da minha vida❤️
+      </div>
+
+      <div class="front"></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="game">
+<h1>Arraste a bola até o gol ⚽</h1>
+<div class="field">
+<div class="goal" id="goal">🥅</div>
+<div class="ball" id="ball">⚽</div>
+</div>
+</section>  
+
+<section id="final">
+<h1>Você é meu campeão 🏆</h1>
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+</section>  
+
+<audio id="golAudio" src="gol.mp3"></audio>
+
+<script>
+let ball,goalEl,dragging=false;
+
+window.onload=()=>{
+ball=document.getElementById('ball');
+goalEl=document.getElementById('goal');
+
+ball.addEventListener('mousedown',()=>dragging=true);
+document.addEventListener('mouseup',()=>dragging=false);
+
+document.addEventListener('mousemove',e=>{
+if(!dragging) return;
+const field=document.querySelector('.field').getBoundingClientRect();
+let x=e.clientX-field.left;
+let y=e.clientY-field.top;
+x-=30;
+y-=30;
+
+ball.style.left=x+'px';
+ball.style.top=y+'px';
+if(y<80) goal();
+});
+};
+
+function startGame(){
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('game').classList.add('active');
+
+  // REMOVE TODOS OS CORAÇÕES EXISTENTES
+  document.querySelectorAll('.heartFloat').forEach(h => h.remove());
+}
+
+function openEnvelope(el){
+ el.classList.add('open');
+ setTimeout(startGame,2000);
+}
+
+function confetti(){
+ for(let i=0;i<25;i++){
+  const c=document.createElement('div');
+  c.className='confetti';
+  c.style.left=Math.random()*100+'vw';
+  c.textContent=['🎉','✨','❤️','⚽'][Math.floor(Math.random()*4)];
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),3000);
+ }
+}
+
+function fireworks(){
+ for(let i=0;i<12;i++){
+  const f=document.createElement('div');
+  f.className='firework';
+  f.textContent='✨';
+  f.style.left=Math.random()*100+'vw';
+  f.style.top=Math.random()*60+'vh';
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1200);
+ }
+}
+
+function goal(){
+goalEl.classList.add('netShake');
+confetti();
+fireworks();
+const audio=document.getElementById('golAudio');
+audio.currentTime=0;
+audio.play().catch(()=>{});
+
+// quando o áudio terminar, vai pra última página
+audio.onended = () => {
+  document.getElementById('game').classList.remove('active');
+  document.getElementById('final').classList.add('active');
+};
+
+const g=document.createElement('div');
+g.className='goalText';
+g.textContent='GOOOOOOOOL! DO CAMPEÃO DO MEU CORAÇÃO!';
+document.body.appendChild(g);
+setTimeout(()=>g.remove(),9000);
+}
+
+/* corações só intro e final */
+setInterval(()=>{
+  const game = document.getElementById('game');
+
+  // bloqueia totalmente na segunda tela
+  if(game.classList.contains('active')) return;
+
+  const h = document.createElement('div');
+  h.className='heartFloat';
+  h.textContent=['❤️','💖','💕','💗'][Math.floor(Math.random()*4)];
+  h.style.left=Math.random()*100+'vw';
+
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+
+},800);
+</script>
+
+</body>
+</html>

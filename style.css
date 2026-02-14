@@ -1,0 +1,254 @@
+*,
+::before,
+::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  width:100%;
+  overflow-x:hidden;
+  background:linear-gradient(185deg,#ff4da6 0%,#80022c 60%,#0c0004 100%);
+}
+
+/* AREA ENVELOPE */
+.envelope-area{
+  width:25rem;
+  height:15rem;
+  margin:150px auto;
+  position:relative;
+}
+
+/* ENVELOPE BASE */
+.envelope{
+  width:110%;
+  height:110%;
+  position:relative;
+  background:#d60000;
+  border-radius:1.5rem;
+  overflow:hidden;
+  perspective:1000px;
+  box-shadow:0 15px 15px rgba(0,0,0,.15);
+  isolation:isolate;
+}
+
+.envelope.open::after{
+  opacity: 0;
+}
+
+/* TAMPA */
+.tampa{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(-120deg,#f38ea4,#e96a86);
+  clip-path:polygon(0 0,50% 70%,100% 0);
+  transform-origin:top;
+  transition:transform 1s ease;
+  z-index:5;
+}
+
+.envelope.open .tampa{
+  transform:rotateX(150deg);
+}
+
+/* FRENTE DO ENVELOPE */
+.front{
+  position:absolute;
+  inset:0;
+  background:#f1889f;
+  clip-path:polygon(0 100%,50% 50%,100% 100%);
+  z-index:4;
+  transition:transform 1s ease;
+  transform:none;
+  backface-visibility:hidden;
+}
+
+/* ABA ESQUERDA */
+.envelope::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:50%;
+  height:100%;
+  background:#f1889f;
+  clip-path:polygon(0 0,100% 60%,0 100%);
+  z-index:3;
+  border-radius:inherit;
+  overflow:hidden;
+}
+
+/* ABA DIREITA */
+.aba-direita{
+  position:absolute;
+  right:0;
+  top:0;
+  width:50%;
+  height:100%;
+  background:#f1889f;
+  clip-path:polygon(100% 0,0 60%,100% 100%);
+  z-index:3;
+  border-radius:inherit;
+  overflow:hidden;
+}
+
+/* CARTA */
+.lettre{
+  position:absolute;
+  width:90%;
+  height:90%;
+  left:5%;
+  top:39%;
+  background:#f7f6ef;
+  font-family:'Pacifico',cursive;
+  color:#ce0606;
+  text-align:center;
+  padding: -3rem;
+  border-radius:6px;
+  z-index:2;
+  transition:transform 1s ease;
+}
+
+.envelope.open .lettre{
+  transform:translateY(-42%);
+}
+
+/* CORAÇÃO */
+.img{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:7.5rem;
+  transform:translate(-55%,-35%);
+  z-index:6;
+  animation:heart infinite forwards infinite;
+}
+
+@keyframes heart{
+  100%{transform:translate(-50%,30%) scale(0);}
+}
+
+/* SEÇÕES */
+section{
+  display:none;
+  padding:40px 20px;
+  min-height:100vh;
+}
+
+section.active{
+  display:block;
+}
+
+/* CAMPO FUTEBOL */
+#game{
+  background:url('estadio.jpg') center bottom/cover no-repeat;
+}
+
+#game h1{
+  position:absolute;
+  top:5%;
+  left:50%;
+  transform:translate(-50%, -50%);
+}
+
+.field{
+  position:relative;
+  width:95%;
+  height:650px;
+  margin:30px auto;
+  background:rgba(0,0,0,.4);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.goal{
+  position:absolute;
+  top:-50px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:150px;
+}
+
+.ball{
+  position:absolute;
+  bottom:5px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:60px;
+  cursor:grab;
+}
+
+/* TEXTO GOL */
+.goalText{
+  position:fixed;
+  top:80%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:30px;
+  font-weight:bold;
+  color:#fff;
+  text-shadow:0 0 25px #ff4da6;
+  z-index:999;
+  font-family:'Pacifico',cursive;
+}
+
+/* CONFETE */
+.confetti{
+  position:fixed;
+  top:-10px;
+  font-size:25px;
+  animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0;}
+}
+
+/* FOGOS */
+.firework{
+  position:fixed;
+  font-size:26px;
+  animation:explode 1.2s ease-out forwards;
+}
+
+@keyframes explode{
+  0%{transform:scale(.5);opacity:1}
+  100%{transform:scale(2);opacity:0}
+}
+
+/* FINAL */
+#final{
+  background:linear-gradient(180deg,#fa2690 0%,#750128 60%,#1a0008 100%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+}
+
+video{
+  width:400px;
+  max-width:90%;
+  height:auto;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  margin-top: 25px;
+}
+
+.heartFloat{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:subir 6s linear forwards;
+  opacity:.7;
+  filter:blur(.4px);
+  text-shadow:0 0 8px #ff9db0;
+}
+
+@keyframes subir{
+  from{transform:translateY(0)}
+  to{transform:translateY(-110vh);opacity:0;}
+}
